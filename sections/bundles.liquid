@@ -2,44 +2,79 @@
   <div class="wrap">
     <div class="panel-head rv">
       {%- if section.settings.kicker != blank -%}
-        <span class="kicker">{{ section.settings.kicker }}</span>
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
       {%- endif -%}
       {%- if section.settings.title != blank -%}
-        <h2 class="d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+        <h2 class="d2" style="margin-top:12px">{{ section.settings.title | escape }}</h2>
       {%- endif -%}
     </div>
-    <div class="cats">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- assign collection = block.settings.collection -%}
-          <a class="glass cat rv rv-d{{ forloop.index | modulo: 4 }}" href="{{ collection.url | default: '#' }}" {{ block.shopify_attributes }}>
-            <span class="ph">
-              {%- assign img = collection.image | default: collection.products.first.featured_image -%}
-              {%- if img -%}
-                {{ img | image_url: height: 360 | image_tag: class: 'pimg', loading: 'lazy' }}
-              {%- else -%}
-                {{ 'collection-1' | placeholder_svg_tag: 'pimg placeholder' }}
-              {%- endif -%}
-            </span>
-            <span class="txt">
-              <h4>{{ collection.title | default: block.settings.title | default: 'Bundle Title' }}</h4>
-              <p>{{ collection.description | strip_html | truncatewords: 10 | default: block.settings.subtitle | default: 'Bundle description goes here' }}</p>
-            </span>
-          </a>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..4) -%}
-          <a class="glass cat rv rv-d{{ forloop.index | modulo: 4 }}" href="#">
-            <span class="ph">
-              {{ 'collection-' | append: i | placeholder_svg_tag: 'pimg placeholder' }}
-            </span>
-            <span class="txt">
-              <h4>Example Bundle</h4>
-              <p>Description of the bundle</p>
-            </span>
-          </a>
-        {%- endfor -%}
-      {%- endif -%}
+    
+    <div class="tiers-grid">
+      {%- for block in section.blocks -%}
+        {%- assign is_highlighted = block.settings.highlight -%}
+        {%- assign card_class = 'glass tier-card rv rv-d' | append: forloop.index -%}
+        {%- if is_highlighted -%}
+          {%- assign card_class = card_class | append: ' highlight' -%}
+        {%- endif -%}
+
+        <div class="{{ card_class }}" {{ block.shopify_attributes }}>
+          {%- if is_highlighted and section.settings.highlight_badge != blank -%}
+            <div class="tier-badge">{{ section.settings.highlight_badge | escape }}</div>
+          {%- endif -%}
+          
+          <div class="tier-head">
+            <h3>{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="subtitle">{{ block.settings.subtitle | escape }}</p>
+            {%- endif -%}
+          </div>
+
+          <div class="tier-price">
+            <strong>{{ block.settings.price | escape }}</strong>
+            {%- if block.settings.compare_at != blank -%}
+              <s>{{ block.settings.compare_at | escape }}</s>
+            {%- endif -%}
+          </div>
+          
+          <div class="tier-body">
+            {%- if block.settings.features != blank -%}
+              <ul class="features">
+                {%- assign features_list = block.settings.features | newline_to_br | split: '<br />' -%}
+                {%- for feature in features_list -%}
+                  {%- assign f = feature | strip -%}
+                  {%- if f != blank -%}
+                    <li>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                      {{ f | escape }}
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+            
+            {%- if block.settings.products != blank -%}
+              <div class="includes">
+                <span class="inc-title">Includes:</span>
+                <ul>
+                  {%- for prod in block.settings.products -%}
+                    <li>{{ prod.title | escape }}</li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </div>
+          
+          <div class="tier-foot">
+            {%- assign btn_class = 'btn btn-ghost' -%}
+            {%- if is_highlighted -%}
+              {%- assign btn_class = 'btn btn-primary' -%}
+            {%- endif -%}
+            <a href="{{ block.settings.cta_link | default: '#' }}" class="{{ btn_class }}">
+              {{ block.settings.cta_label | default: 'Choose Plan' | escape }}
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -56,7 +91,7 @@
   }
   #shopify-section-{{ section.id }} .panel-head {
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 40px;
   }
   #shopify-section-{{ section.id }} .panel-head .kicker {
     display: inline-block;
@@ -70,157 +105,275 @@
     margin-bottom: 12px;
   }
 
-  #shopify-section-{{ section.id }} .cats {
+  #shopify-section-{{ section.id }} .tiers-grid {
     display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    grid-template-columns: 1fr;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
   }
-  @media(min-width: 900px) {
-    #shopify-section-{{ section.id }} .cats {
-      grid-template-columns: repeat(4, 1fr);
+  @media(min-width: 860px) {
+    #shopify-section-{{ section.id }} .tiers-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
-  }
-  
-  #shopify-section-{{ section.id }} .cat {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    transition: transform .4s var(--ease);
-  }
-  #shopify-section-{{ section.id }} .cat:hover {
-    transform: translateY(-5px);
-  }
-  @media(prefers-reduced-motion: reduce) {
-    #shopify-section-{{ section.id }} .cat:hover {
-      transform: none;
-    }
-  }
-  
-  #shopify-section-{{ section.id }} .cat .ph {
-    height: 194px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 14px 12px 0;
-    position: relative;
-  }
-  #shopify-section-{{ section.id }} .cat .ph::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(110% 80% at 50% 6%, rgba(236,230,247,.20), rgba(75,58,143,.10) 56%, transparent 78%);
-  }
-  #shopify-section-{{ section.id }} .cat .ph .pimg {
-    position: relative;
-    max-height: 176px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 16px 24px rgba(1,24,22,.58));
-  }
-  #shopify-section-{{ section.id }} .cat .ph .placeholder {
-    width: 100%;
-    height: 100%;
-    fill: var(--g-line);
-    filter: none;
-  }
-  
-  #shopify-section-{{ section.id }} .cat .txt {
-    padding: 14px 16px 18px;
-    border-top: 1px solid rgba(236,230,247,.12);
-  }
-  #shopify-section-{{ section.id }} .cat .txt h4 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .03em;
-    color: var(--surface);
-    margin-bottom: 5px;
-  }
-  #shopify-section-{{ section.id }} .cat .txt p {
-    font-size: 11.8px;
-    color: var(--paper-3);
-    margin: 0;
   }
 
-  @media(max-width: 760px) {
-    #shopify-section-{{ section.id }} .cat .ph { height: 158px; }
-    #shopify-section-{{ section.id }} .cat .ph .pimg { max-height: 142px; }
+  #shopify-section-{{ section.id }} .tier-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 16px;
+    position: relative;
+    background: linear-gradient(162deg, rgba(236,230,247,.08), rgba(75,58,143,.04));
+    transition: transform .4s var(--ease);
+  }
+  #shopify-section-{{ section.id }} .tier-card.highlight {
+    background: linear-gradient(162deg, rgba(236,230,247,.14), rgba(75,58,143,.12));
+    border-color: rgba(240,160,60,.3);
+    box-shadow: 0 24px 48px rgba(18,12,34,.3), 0 0 0 1px rgba(240,160,60,.1) inset;
+    padding: 32px 24px;
+    z-index: 2;
+  }
+
+  @media(prefers-reduced-motion: no-preference) {
+    #shopify-section-{{ section.id }} .tier-card:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tier-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #120c22;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tier-head {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(236,230,247,.1);
+  }
+  #shopify-section-{{ section.id }} .tier-head h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    color: var(--surface);
+    margin-bottom: 6px;
+  }
+  #shopify-section-{{ section.id }} .tier-head .subtitle {
+    font-size: 13px;
+    color: var(--paper-2);
+  }
+
+  #shopify-section-{{ section.id }} .tier-price {
+    text-align: center;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+  }
+  #shopify-section-{{ section.id }} .tier-price strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    color: var(--surface);
+    line-height: 1;
+  }
+  #shopify-section-{{ section.id }} .tier-price s {
+    font-size: 14px;
+    color: var(--paper-3);
+  }
+
+  #shopify-section-{{ section.id }} .tier-body {
+    flex-grow: 1;
+    margin-bottom: 28px;
+  }
+
+  #shopify-section-{{ section.id }} .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+  }
+  #shopify-section-{{ section.id }} .features li {
+    font-size: 14px;
+    color: var(--paper-2);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+  }
+  #shopify-section-{{ section.id }} .features li svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .includes {
+    padding-top: 20px;
+    border-top: 1px solid rgba(236,230,247,.1);
+  }
+  #shopify-section-{{ section.id }} .inc-title {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--paper-3);
+    margin-bottom: 8px;
+  }
+  #shopify-section-{{ section.id }} .includes ul {
+    list-style: disc;
+    padding-left: 18px;
+    margin: 0;
+    font-size: 13px;
+    color: var(--paper-2);
+  }
+  #shopify-section-{{ section.id }} .includes ul li {
+    margin-bottom: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .tier-foot .btn {
+    width: 100%;
+    justify-content: center;
   }
 {% endstyle %}
 
 {% schema %}
 {
-  "name": "Bundle Categories",
+  "name": "Bundle Tiers",
   "settings": [
     {
       "type": "text",
       "id": "kicker",
       "label": "Kicker",
-      "default": "Bundle categories"
+      "default": "Bundles"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Find the right bundle for you"
+      "default": "Choose your clean"
+    },
+    {
+      "type": "text",
+      "id": "highlight_badge",
+      "label": "Highlight Badge Text",
+      "default": "Most Popular"
     }
   ],
   "blocks": [
     {
-      "type": "collection",
-      "name": "Collection",
-      "limit": 4,
+      "type": "tier",
+      "name": "Tier",
+      "limit": 3,
       "settings": [
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
-        },
         {
           "type": "text",
           "id": "title",
-          "label": "Override Title (Optional)"
+          "label": "Tier Title",
+          "default": "Starter"
         },
         {
           "type": "text",
           "id": "subtitle",
-          "label": "Override Subtitle (Optional)"
+          "label": "Subtitle",
+          "default": "Perfect for testing"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹999"
+        },
+        {
+          "type": "text",
+          "id": "compare_at",
+          "label": "Compare-at Price (Optional)",
+          "default": "₹1,299"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features",
+          "info": "Put each feature on a new line",
+          "default": "3 full-size bottles\nMicrofiber cloth\nFree shipping"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Included Products"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button Label",
+          "default": "Shop Starter"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight this tier",
+          "default": false
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Bundle Categories",
+      "name": "Bundle Tiers",
       "blocks": [
         {
-          "type": "collection",
+          "type": "tier",
           "settings": {
-            "title": "Kitchen bundle",
-            "subtitle": "Grease, dishes & more"
+            "title": "Starter",
+            "subtitle": "The essentials",
+            "price": "₹999",
+            "compare_at": "₹1,299",
+            "features": "2 core cleaners\n1 microfibre cloth\nStandard shipping",
+            "cta_label": "Shop Starter",
+            "highlight": false
           }
         },
         {
-          "type": "collection",
+          "type": "tier",
           "settings": {
-            "title": "Bathroom bundle",
-            "subtitle": "Deep clean & disinfect"
+            "title": "Most Popular",
+            "subtitle": "Everything you need",
+            "price": "₹1,499",
+            "compare_at": "₹1,899",
+            "features": "4 core cleaners\n2 microfibre cloths\nFree express shipping\nRefill discount",
+            "cta_label": "Shop Most Popular",
+            "highlight": true
           }
         },
         {
-          "type": "collection",
+          "type": "tier",
           "settings": {
-            "title": "Laundry bundle",
-            "subtitle": "Softer, fresher wash"
-          }
-        },
-        {
-          "type": "collection",
-          "settings": {
-            "title": "Hard water bundle",
-            "subtitle": "Melt away limescale"
+            "title": "Whole Home",
+            "subtitle": "The complete set",
+            "price": "₹2,499",
+            "compare_at": "₹3,199",
+            "features": "All 8 cleaners\n4 microfibre cloths\nFree express shipping\nLifetime refill discount",
+            "cta_label": "Shop Whole Home",
+            "highlight": false
           }
         }
       ]

@@ -11,34 +11,41 @@
 {%- liquid
   assign loading = loading | default: 'lazy'
   assign badge_label = badge_override
-  if badge_label == blank and product.metafields.custom.badge_label != blank
+  if product != blank and badge_label == blank and product.metafields.custom.badge_label != blank
     assign badge_label = product.metafields.custom.badge_label.value
   endif
   
-  assign variant = product.selected_or_first_available_variant
-  assign price = variant.price
-  assign compare_at = variant.compare_at_price
-  assign is_sold_out = false
-  if product.available == false
-    assign is_sold_out = true
-  endif
+  if product != blank
+    assign variant = product.selected_or_first_available_variant
+    assign price = variant.price
+    assign compare_at = variant.compare_at_price
+    assign is_sold_out = false
+    if product.available == false
+      assign is_sold_out = true
+    endif
 
-  assign has_discount = false
-  if compare_at != blank and compare_at > price
-    assign has_discount = true
-    assign discount_amount = compare_at | minus: price
-    assign discount_percent = discount_amount | times: 100.0 | divided_by: compare_at | round
+    assign has_discount = false
+    if compare_at != blank and compare_at > price
+      assign has_discount = true
+      assign discount_amount = compare_at | minus: price
+      assign discount_percent = discount_amount | times: 100.0 | divided_by: compare_at | round
+    endif
+    assign prod_title = product.title
+    assign prod_url = product.url
+  else
+    assign prod_title = 'Example Product'
+    assign prod_url = '#'
   endif
 -%}
 
 <article class="glass card purelane-card">
-  <a href="{{ product.url }}" class="card-link" aria-label="{{ product.title | escape }}">
+  <a href="{{ prod_url }}" class="card-link" aria-label="{{ prod_title | escape }}">
     <div class="shot">
       {%- if badge_label != blank -%}
         <span class="pill">{{ badge_label | escape }}</span>
       {%- endif -%}
       
-      {%- if product.featured_image -%}
+      {%- if product != blank and product.featured_image -%}
         {{ product.featured_image | image_url: width: 600 | image_tag: 
           loading: loading, 
           sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw', 
@@ -50,7 +57,7 @@
       {%- endif -%}
     </div>
     
-    <h4 class="card-title">{{ product.title | escape }}</h4>
+    <h4 class="card-title">{{ prod_title | escape }}</h4>
     
     <div class="rate">
       {%- comment -%}Placeholder for rating. You can implement real reviews if you have an app.{%- endcomment -%}
@@ -58,19 +65,23 @@
     </div>
     
     <div class="pr">
-      <strong>{{ price | money_without_trailing_zeros }}</strong>
-      {%- if has_discount -%}
-        <s>{{ compare_at | money_without_trailing_zeros }}</s>
-        <em>{{ discount_percent }}% off</em>
+      {%- if product != blank -%}
+        <strong>{{ price | money_without_trailing_zeros }}</strong>
+        {%- if has_discount -%}
+          <s>{{ compare_at | money_without_trailing_zeros }}</s>
+          <em>{{ discount_percent }}% off</em>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </a>
   
   <div class="card-action">
-    {%- if is_sold_out -%}
+    {%- if product == blank -%}
+      <div style="min-height:36px"></div>
+    {%- elsif is_sold_out -%}
       <button class="btn btn-ghost btn-sm" disabled>Sold out</button>
     {%- else -%}
-      <button class="btn btn-ghost btn-sm" onclick="window.location.href='{{ product.url }}'">View Product</button>
+      <button class="btn btn-ghost btn-sm" onclick="window.location.href='{{ prod_url }}'">View Product</button>
       {%- comment -%}A real add-to-cart would require a form, keeping simple as per spec{%- endcomment -%}
     {%- endif -%}
   </div>
