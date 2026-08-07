@@ -69,139 +69,143 @@
         <strong>{{ price | money_without_trailing_zeros }}</strong>
         {%- if has_discount -%}
           <s>{{ compare_at | money_without_trailing_zeros }}</s>
-          <em>{{ discount_percent }}% off</em>
-        {%- endif -%}
+        <div class="pimg p-kbtl" style="width: 100%; height: 100%;"></div>
       {%- endif -%}
+    </a>
+    
+    <div class="card-info">
+      <div class="rate">
+        {%- comment -%}Placeholder for rating{%- endcomment -%}
+        <b>★ 4.8</b> &middot; 237 reviews
+      </div>
+      
+      <h4 class="card-title">{{ product.title | escape }}</h4>
+      
+      <div class="pr">
+        <strong>{{ product.price | money_without_trailing_zeros }}</strong>
+        {%- if product.compare_at_price > product.price -%}
+          <s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+        {%- endif -%}
+        <em class="badge">Save {{ product.compare_at_price | minus: product.price | money_without_trailing_zeros }}</em>
+      </div>
+
+      <button type="button" class="btn btn-primary" style="width: 100%;">
+        Add to cart
+      </button>
     </div>
-  </a>
-  
-  <div class="card-action">
-    {%- if product == blank -%}
-      <div style="min-height:36px"></div>
-    {%- elsif is_sold_out -%}
-      <button class="btn btn-ghost btn-sm" disabled>Sold out</button>
-    {%- else -%}
-      <button class="btn btn-ghost btn-sm" onclick="window.location.href='{{ prod_url }}'">View Product</button>
-      {%- comment -%}A real add-to-cart would require a form, keeping simple as per spec{%- endcomment -%}
-    {%- endif -%}
-  </div>
+  {%- else -%}
+    <div class="shot">
+      <div class="pimg p-kbtl" style="width: 100%; height: 100%;"></div>
+    </div>
+    
+    <div class="card-info">
+      <div class="rate">
+        <b>★ 4.8</b> &middot; 237 reviews
+      </div>
+      <h4 class="card-title">Premium Floor Cleaner</h4>
+      <div class="pr">
+        <strong>₹1,199</strong><s>₹1,499</s>
+      </div>
+      <button type="button" class="btn btn-primary" style="width: 100%;">
+        Add to cart
+      </button>
+    </div>
+  {%- endif -%}
 </article>
 
 {% style %}
   .purelane-card {
-    padding: 16px;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
     height: 100%;
-    transition: transform .4s var(--ease);
+    transition: transform .4s var(--ease), border-color .4s var(--ease);
   }
   .purelane-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    border-color: rgba(236,230,247,.3);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .purelane-card:hover {
-      transform: none;
-    }
-  }
-  .purelane-card .card-link {
-    text-decoration: none;
-    color: inherit;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
+  
   .purelane-card .shot {
-    height: 150px;
-    border-radius: 14px;
-    margin-bottom: 14px;
-    display: grid;
-    place-items: center;
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(160deg, rgba(236,230,247,.08), rgba(75,58,143,.12));
+    border-bottom: 1px solid rgba(236,230,247,.1);
     position: relative;
     overflow: hidden;
-    background: linear-gradient(160deg, rgba(236,230,247,.12), rgba(75,58,143,.2));
-    border: 1px solid rgba(236,230,247,.14);
+    display: grid;
+    place-items: center;
   }
-  .purelane-card .pill {
-    position: absolute;
-    top: 9px;
-    left: 9px;
-    font-size: 8.5px;
-    font-weight: 800;
-    letter-spacing: .13em;
-    text-transform: uppercase;
-    padding: 4px 9px;
-    border-radius: 999px;
-    background: rgba(23,16,43,.6);
-    border: 1px solid rgba(240,160,60,.32);
-    color: var(--accent);
-    z-index: 2;
+  .purelane-card .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  .purelane-card .pimg-real {
-    max-height: 122px;
-    width: auto;
-    object-fit: contain;
-    transition: transform 0.4s var(--ease);
+  .purelane-card .pimg {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(0.85);
   }
-  .purelane-card:hover .pimg-real {
-    transform: scale(1.05);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .purelane-card:hover .pimg-real {
-      transform: none;
-    }
-  }
-  .purelane-card .placeholder {
-    height: 122px;
-    width: auto;
-    fill: var(--g-line);
-  }
-  .purelane-card .card-title {
-    font-size: 15px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    letter-spacing: .02em;
-    color: var(--surface);
-    line-height: 1.2;
-    margin-bottom: 7px;
-  }
-  .purelane-card .rate {
-    font-size: 11.5px;
-    color: var(--paper-2);
-    margin-bottom: 12px;
+
+  .purelane-card .card-info {
+    padding: 24px;
     display: flex;
-    align-items: center;
-    gap: 5px;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .purelane-card .rate {
+    font-size: 13px;
+    color: var(--paper-2);
+    margin-bottom: 8px;
   }
   .purelane-card .rate b {
     color: var(--accent);
     font-weight: 700;
   }
+  
+  .purelane-card .card-title {
+    font-size: 18px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--surface);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  
   .purelane-card .pr {
     margin-top: auto;
     display: flex;
     align-items: baseline;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 20px;
   }
   .purelane-card .pr strong {
     font-family: 'Outfit', sans-serif;
-    font-size: 20px;
+    font-size: 24px;
     color: var(--surface);
     font-weight: 800;
   }
   .purelane-card .pr s {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--paper-3);
   }
-  .purelane-card .pr em {
-    font-style: normal;
+  .purelane-card .pr .badge {
+    margin-left: auto;
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: .08em;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(240,160,60,.15);
     color: var(--accent);
+    font-style: normal;
   }
-  .purelane-card .card-action .btn {
-    width: 100%;
-    justify-content: center;
+  
+  @media(max-width: 768px) {
+    .purelane-card .card-info { padding: 18px; }
+    .purelane-card .card-title { font-size: 16px; }
+    .purelane-card .pr strong { font-size: 20px; }
   }
 {% endstyle %}
