@@ -61,96 +61,105 @@
         {%- assign prod2 = coll.products[1] -%}
         {%- assign prod3 = coll.products[2] -%}
         
+        {%- assign p1_price = 45000 -%}
+        {%- assign p1_compare = 50000 -%}
         {%- if prod1 -%}
-          <div class="hslide hs1 on" data-n="1">
-            {%- if prod1.featured_image -%}
-              {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'hp a d1 placeholder' }}
-            {%- endif -%}
-            {%- assign p1_price = prod1.price -%}
-            {%- assign p1_compare = prod1.compare_at_price | default: prod1.price -%}
-            <div class="glass-2 ptag">
-              <span class="lbl">Single bottle</span>
-              <span class="val">
-                <strong>{{ p1_price | money_without_trailing_zeros }}</strong>
-                {%- if p1_compare > p1_price -%}<s>{{ p1_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-              </span>
-              {%- if p1_compare > p1_price -%}
-                <span class="cut">Save {{ p1_compare | minus: p1_price | money_without_trailing_zeros }}</span>
-              {%- endif -%}
-            </div>
-          </div>
+          {%- assign p1_price = prod1.price -%}
+          {%- assign p1_compare = prod1.compare_at_price | default: prod1.price -%}
         {%- endif -%}
+
+        <div class="hslide hs1 on" data-n="1">
+          {%- if prod1 and prod1.featured_image -%}
+            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'hp a d1 placeholder' }}
+          {%- endif -%}
+          <div class="glass-2 ptag">
+            <span class="lbl">Single bottle</span>
+            <span class="val">
+              <strong>{{ p1_price | money_without_trailing_zeros }}</strong>
+              {%- if p1_compare > p1_price -%}<s>{{ p1_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
+            {%- if p1_compare > p1_price -%}
+              <span class="cut">Save {{ p1_compare | minus: p1_price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+          </div>
+        </div>
         
+        {%- assign p2_price = 85000 -%}
+        {%- assign p2_compare = 100000 -%}
         {%- if prod1 and prod2 -%}
-          <div class="hslide hs2" data-n="2">
-            {%- if prod2.featured_image -%}
-              {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
-            {%- endif -%}
-            {%- if prod1.featured_image -%}
-              {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'hp b d2 placeholder' }}
-            {%- endif -%}
-            
-            {%- assign p2_price = p1_price | plus: prod2.price -%}
-            {%- assign p2_compare_item = prod2.compare_at_price | default: prod2.price -%}
-            {%- assign p2_compare = p1_compare | plus: p2_compare_item -%}
-            <div class="glass-2 ptag">
-              <span class="lbl">Any 2 products</span>
-              <span class="val">
-                <strong>{{ p2_price | money_without_trailing_zeros }}</strong>
-                {%- if p2_compare > p2_price -%}<s>{{ p2_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-              </span>
-              {%- if p2_compare > p2_price -%}
-                <span class="cut">Save {{ p2_compare | minus: p2_price | money_without_trailing_zeros }}</span>
-              {%- endif -%}
-            </div>
-          </div>
+          {%- assign p2_price = p1_price | plus: prod2.price -%}
+          {%- assign p2_compare_item = prod2.compare_at_price | default: prod2.price -%}
+          {%- assign p2_compare = p1_compare | plus: p2_compare_item -%}
         {%- endif -%}
+
+        <div class="hslide hs2" data-n="2">
+          {%- if prod2 and prod2.featured_image -%}
+            {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
+          {%- endif -%}
+          {%- if prod1 and prod1.featured_image -%}
+            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'hp b d2 placeholder' }}
+          {%- endif -%}
+          
+          <div class="glass-2 ptag">
+            <span class="lbl">Any 2 products</span>
+            <span class="val">
+              <strong>{{ p2_price | money_without_trailing_zeros }}</strong>
+              {%- if p2_compare > p2_price -%}<s>{{ p2_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
+            {%- if p2_compare > p2_price -%}
+              <span class="cut">Save {{ p2_compare | minus: p2_price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+          </div>
+        </div>
         
+        {%- assign p3_price = 120000 -%}
+        {%- assign p3_compare = 150000 -%}
         {%- if prod1 and prod2 and prod3 -%}
-          <div class="hslide hs3" data-n="3">
-            {%- if prod2.featured_image -%}
-              {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
-            {%- endif -%}
-            {%- if prod3.featured_image -%}
-              {{ prod3.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-3' | placeholder_svg_tag: 'hp b d2 placeholder' }}
-            {%- endif -%}
-            {%- if prod1.featured_image -%}
-              {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp c d3', loading: 'eager' }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'hp c d3 placeholder' }}
-            {%- endif -%}
-            
-            {%- assign p3_price = p2_price | plus: prod3.price -%}
-            {%- assign p3_compare_item = prod3.compare_at_price | default: prod3.price -%}
-            {%- assign p3_compare = p2_compare | plus: p3_compare_item -%}
-            <div class="glass-2 ptag">
-              <span class="lbl">Any 3 products</span>
-              <span class="val">
-                <strong>{{ p3_price | money_without_trailing_zeros }}</strong>
-                {%- if p3_compare > p3_price -%}<s>{{ p3_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-              </span>
-              {%- if p3_compare > p3_price -%}
-                <span class="cut">Save {{ p3_compare | minus: p3_price | money_without_trailing_zeros }}</span>
-              {%- endif -%}
-            </div>
-          </div>
+          {%- assign p3_price = p2_price | plus: prod3.price -%}
+          {%- assign p3_compare_item = prod3.compare_at_price | default: prod3.price -%}
+          {%- assign p3_compare = p2_compare | plus: p3_compare_item -%}
         {%- endif -%}
+
+        <div class="hslide hs3" data-n="3">
+          {%- if prod2 and prod2.featured_image -%}
+            {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
+          {%- endif -%}
+          {%- if prod3 and prod3.featured_image -%}
+            {{ prod3.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-3' | placeholder_svg_tag: 'hp b d2 placeholder' }}
+          {%- endif -%}
+          {%- if prod1 and prod1.featured_image -%}
+            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp c d3', loading: 'eager' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'hp c d3 placeholder' }}
+          {%- endif -%}
+          
+          <div class="glass-2 ptag">
+            <span class="lbl">Any 3 products</span>
+            <span class="val">
+              <strong>{{ p3_price | money_without_trailing_zeros }}</strong>
+              {%- if p3_compare > p3_price -%}<s>{{ p3_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
+            {%- if p3_compare > p3_price -%}
+              <span class="cut">Save {{ p3_compare | minus: p3_price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+          </div>
+        </div>
       </div>
       
       <div class="hdots" id="hdots">
-        {%- if prod1 -%}<button type="button" class="on" aria-label="Show 1 product"></button>{%- endif -%}
-        {%- if prod2 -%}<button type="button" aria-label="Show 2 products"></button>{%- endif -%}
-        {%- if prod3 -%}<button type="button" aria-label="Show 3 products"></button>{%- endif -%}
+        <button type="button" class="on" aria-label="Show 1 product"></button>
+        <button type="button" aria-label="Show 2 products"></button>
+        <button type="button" aria-label="Show 3 products"></button>
       </div>
     </div>
 

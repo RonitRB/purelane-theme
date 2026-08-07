@@ -23,10 +23,10 @@
 
 /* Base modifications not covered by Dawn */
 html { scroll-behavior: smooth; }
-body, body.gradient {
+body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--ink) !important;
-  color: var(--paper) !important;
+  background: var(--ink);
+  color: var(--paper);
   line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
@@ -107,7 +107,13 @@ body, body.gradient {
 .rule svg { width: 14px; height: 14px; }
 
 /* SEC Layout (general padding) */
-.sec { padding: var(--sec-y) 0; position: relative; z-index: 10; }
+.sec { 
+  padding: var(--sec-y) 0; 
+  position: relative; 
+  z-index: 10; 
+  background: var(--ink);
+  color: var(--paper);
+}
 .sec-pad { padding: 40px 20px; }
 @media (min-width: 900px) {
   .sec { padding: calc(var(--sec-y) * 2) 0; }
