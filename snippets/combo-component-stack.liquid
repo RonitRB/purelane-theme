@@ -8,6 +8,7 @@
 {%- liquid
   assign components = components | default: nil
   assign labels = labels | default: nil
+  assign loading = loading | default: 'lazy'
 -%}
 
 {%- if components != blank and components.size > 0 -%}
@@ -27,7 +28,7 @@
               class: 'combo-stack__img',
               widths: '60,90,120',
               sizes: '60px',
-              loading: 'lazy',
+              loading: loading,
               alt: component.featured_image.alt | default: component.title
           }}
         {%- else -%}

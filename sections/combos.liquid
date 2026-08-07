@@ -65,13 +65,7 @@
               assign component_count = components.size
             endif
 
-            assign is_featured = false
-            if badge_label != blank and featured_match != blank
-              assign badge_down = badge_label | downcase
-              if badge_down == featured_match
-                assign is_featured = true
-              endif
-            endif
+            assign is_featured = product.metafields.custom.is_featured_combo.value | default: false
 
             assign card_class = 'glass combo'
             if is_featured
@@ -91,9 +85,7 @@
 
           <article class="{{ card_class }}">
             <div class="tray">
-              {%- if is_featured and section.settings.featured_save_label != blank -%}
-                <span class="save">{{ section.settings.featured_save_label | escape }}</span>
-              {%- elsif savings > 0 -%}
+              {%- if savings > 0 -%}
                 <span class="save">
                   {{- section.settings.save_prefix | default: 'You save' | escape }}
                   {{ savings | money_without_trailing_zeros -}}
@@ -104,7 +96,7 @@
                 <span class="flag">{{ badge_label | escape }}</span>
               {%- endif -%}
 
-              {% render 'combo-component-stack', components: components, labels: labels %}
+              {% render 'combo-component-stack', components: components, labels: labels, loading: image_loading %}
             </div>
 
             <div class="body">
@@ -488,20 +480,6 @@
       "step": 1,
       "default": 5,
       "label": "Products to show"
-    },
-    {
-      "type": "text",
-      "id": "featured_badge_match",
-      "label": "Featured badge match",
-      "default": "Best value",
-      "info": "Combo with this badge_label gets hero styling and primary button"
-    },
-    {
-      "type": "text",
-      "id": "featured_save_label",
-      "label": "Featured save label",
-      "default": "Biggest saving",
-      "info": "Save badge text on the featured combo instead of computed savings"
     },
     {
       "type": "text",
