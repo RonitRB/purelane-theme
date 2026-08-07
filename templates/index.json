@@ -1,75 +1,185 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero": {
+      "type": "hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "badge_1": {
+          "type": "badge",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z\"/><path d=\"M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z\"/></svg>",
+            "label": "Plant\npowered"
           }
         },
-        "button": {
-          "type": "buttons",
+        "badge_2": {
+          "type": "badge",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z\"/><path d=\"m9 12 2.2 2.2L15.4 10\"/></svg>",
+            "label": "Safe for\nkids & pets"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"8.4\"/><path d=\"M6.4 17.6 17.6 6.4\"/></svg>",
+            "label": "Zero harsh\nchemicals"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "badge_1",
+        "badge_2",
+        "badge_3"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "heading": "Clean\nThat\nLasts",
+        "heading_highlight": "Lasts",
+        "lede": "<p>Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.<\/p>",
+        "cta_1_label": "Shop now",
+        "cta_1_link": "#shop",
+        "cta_2_label": "How it works",
+        "cta_2_link": "#how"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "title": "Works like a charm",
+            "text": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
+            "author": "Anita",
+            "product_tag": "Laundry detergent"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "title": "Best dishwash ever",
+            "text": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
+            "author": "Priya",
+            "product_tag": "Dishwash gel"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "title": "Great product, great packaging",
+            "text": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
+            "author": "Sunita",
+            "product_tag": "Liquid handwash"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "title": "Dog friendly",
+            "text": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
+            "author": "Rohit S.",
+            "product_tag": "Floor cleaner"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Sparkling taps again",
+            "text": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
+            "author": "Verified buyer",
+            "product_tag": "Tap cleaner"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ],
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "kicker": "That's what they said",
+        "rating": "4.8",
+        "rating_text": "from 8,000+ reviews",
+        "social_proof": "Loved by <b>12 lakh+<\/b> homes"
+      }
+    },
+    "combos": {
+      "type": "combos",
+      "settings": {
+        "kicker": "Pre-built to save you money",
+        "heading": "Best selling combos",
+        "lede": "<p>Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.<\/p>",
+        "products_to_show": 5,
+        "featured_badge_match": "Best value",
+        "featured_save_label": "Biggest saving",
+        "save_prefix": "You save",
+        "save_em_prefix": "Save",
+        "products_count_suffix": "products",
+        "fine_print": "Inclusive of all taxes · COD available",
+        "button_label": "Shop bundle",
+        "button_link": "#bundles",
+        "swipe_cue": "Swipe for more combos",
+        "rail_note": "<p>Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay.<\/p>",
+        "rail_aria_label": "Best selling combos"
+      }
+    },
+    "product_grid": {
+      "type": "product-grid",
+      "settings": {
+        "kicker": "Bestsellers",
+        "title": "Loved by 30,000 homes",
+        "limit": 4
+      }
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "bundle_1": {
+          "type": "collection",
+          "settings": {
+            "title": "Kitchen bundle",
+            "subtitle": "Grease, dishes & more"
+          }
+        },
+        "bundle_2": {
+          "type": "collection",
+          "settings": {
+            "title": "Bathroom bundle",
+            "subtitle": "Deep clean & disinfect"
+          }
+        },
+        "bundle_3": {
+          "type": "collection",
+          "settings": {
+            "title": "Laundry bundle",
+            "subtitle": "Softer, fresher wash"
+          }
+        },
+        "bundle_4": {
+          "type": "collection",
+          "settings": {
+            "title": "Hard water bundle",
+            "subtitle": "Melt away limescale"
+          }
+        }
+      },
+      "block_order": [
+        "bundle_1",
+        "bundle_2",
+        "bundle_3",
+        "bundle_4"
+      ],
+      "settings": {
+        "kicker": "Bundle categories",
+        "title": "Find the right bundle for you"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero",
+    "reviews",
+    "combos",
+    "product_grid",
+    "bundles"
   ]
 }

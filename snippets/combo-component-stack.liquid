@@ -1,0 +1,50 @@
+{% comment %}
+  Renders the horizontal component icon row inside a combo card tray.
+  Expects:
+    - components: list of product references (custom.combo_components)
+    - labels: list of single-line strings (custom.combo_component_labels), paired by index
+{% endcomment %}
+
+{%- liquid
+  assign components = components | default: nil
+  assign labels = labels | default: nil
+-%}
+
+{%- if components != blank and components.size > 0 -%}
+  <div class="stack">
+    {%- for component in components -%}
+      {%- assign label_index = forloop.index0 -%}
+      {%- assign caption = labels[label_index] -%}
+      {%- unless forloop.first -%}
+        <span class="plus" aria-hidden="true">+</span>
+      {%- endunless -%}
+      <span class="it">
+        {%- if component.featured_image != blank -%}
+          {{
+            component.featured_image
+            | image_url: width: 120
+            | image_tag:
+              class: 'combo-stack__img',
+              widths: '60,90,120',
+              sizes: '60px',
+              loading: 'lazy',
+              alt: component.featured_image.alt | default: component.title
+          }}
+        {%- else -%}
+          <span class="tile" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/>
+              <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/>
+            </svg>
+          </span>
+          <span class="visually-hidden">{{ component.title }}</span>
+        {%- endif -%}
+        {%- if caption != blank -%}
+          <span>{{ caption }}</span>
+        {%- elsif component.title != blank -%}
+          <span>{{ component.title }}</span>
+        {%- endif -%}
+      </span>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

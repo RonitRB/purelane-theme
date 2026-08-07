@@ -1,0 +1,197 @@
+{%- comment -%}
+  Accepts:
+  - product: {Object} Product Liquid object
+  - badge_override: {String} Optional badge label to use instead of product metafield
+  - loading: {String} Optional. 'eager' or 'lazy'. Default is 'lazy'.
+
+  Usage:
+  {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign loading = loading | default: 'lazy'
+  assign badge_label = badge_override
+  if badge_label == blank and product.metafields.custom.badge_label != blank
+    assign badge_label = product.metafields.custom.badge_label.value
+  endif
+  
+  assign variant = product.selected_or_first_available_variant
+  assign price = variant.price
+  assign compare_at = variant.compare_at_price
+  assign is_sold_out = false
+  if product.available == false
+    assign is_sold_out = true
+  endif
+
+  assign has_discount = false
+  if compare_at != blank and compare_at > price
+    assign has_discount = true
+    assign discount_amount = compare_at | minus: price
+    assign discount_percent = discount_amount | times: 100.0 | divided_by: compare_at | round
+  endif
+-%}
+
+<article class="glass card purelane-card">
+  <a href="{{ product.url }}" class="card-link" aria-label="{{ product.title | escape }}">
+    <div class="shot">
+      {%- if badge_label != blank -%}
+        <span class="pill">{{ badge_label | escape }}</span>
+      {%- endif -%}
+      
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 600 | image_tag: 
+          loading: loading, 
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw', 
+          widths: '300, 400, 600',
+          class: 'pimg-real'
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'pimg-real placeholder' }}
+      {%- endif -%}
+    </div>
+    
+    <h4 class="card-title">{{ product.title | escape }}</h4>
+    
+    <div class="rate">
+      {%- comment -%}Placeholder for rating. You can implement real reviews if you have an app.{%- endcomment -%}
+      <b>★ 4.8</b> &middot; 237 reviews
+    </div>
+    
+    <div class="pr">
+      <strong>{{ price | money_without_trailing_zeros }}</strong>
+      {%- if has_discount -%}
+        <s>{{ compare_at | money_without_trailing_zeros }}</s>
+        <em>{{ discount_percent }}% off</em>
+      {%- endif -%}
+    </div>
+  </a>
+  
+  <div class="card-action">
+    {%- if is_sold_out -%}
+      <button class="btn btn-ghost btn-sm" disabled>Sold out</button>
+    {%- else -%}
+      <button class="btn btn-ghost btn-sm" onclick="window.location.href='{{ product.url }}'">View Product</button>
+      {%- comment -%}A real add-to-cart would require a form, keeping simple as per spec{%- endcomment -%}
+    {%- endif -%}
+  </div>
+</article>
+
+{% style %}
+  .purelane-card {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform .4s var(--ease);
+  }
+  .purelane-card:hover {
+    transform: translateY(-5px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .purelane-card:hover {
+      transform: none;
+    }
+  }
+  .purelane-card .card-link {
+    text-decoration: none;
+    color: inherit;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .purelane-card .shot {
+    height: 150px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(236,230,247,.12), rgba(75,58,143,.2));
+    border: 1px solid rgba(236,230,247,.14);
+  }
+  .purelane-card .pill {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(23,16,43,.6);
+    border: 1px solid rgba(240,160,60,.32);
+    color: var(--accent);
+    z-index: 2;
+  }
+  .purelane-card .pimg-real {
+    max-height: 122px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.4s var(--ease);
+  }
+  .purelane-card:hover .pimg-real {
+    transform: scale(1.05);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .purelane-card:hover .pimg-real {
+      transform: none;
+    }
+  }
+  .purelane-card .placeholder {
+    height: 122px;
+    width: auto;
+    fill: var(--g-line);
+  }
+  .purelane-card .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--surface);
+    line-height: 1.2;
+    margin-bottom: 7px;
+  }
+  .purelane-card .rate {
+    font-size: 11.5px;
+    color: var(--paper-2);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .purelane-card .rate b {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .purelane-card .pr {
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .purelane-card .pr strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    color: var(--surface);
+    font-weight: 700;
+  }
+  .purelane-card .pr s {
+    font-size: 12px;
+    color: var(--paper-3);
+  }
+  .purelane-card .pr em {
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: var(--accent);
+  }
+  .purelane-card .card-action .btn {
+    width: 100%;
+    justify-content: center;
+  }
+{% endstyle %}
