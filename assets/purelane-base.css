@@ -12,12 +12,12 @@
   --surface: #faf7fd;
   --g-bg: linear-gradient(158deg, rgba(236,230,247,.15), rgba(75,58,143,.20) 58%, rgba(23,16,43,.28));
   --g-line: rgba(236,230,247,.22);
-  --g-shadow: 0 26px 74px rgba(18,12,34,.44);
-  --g-inset: inset 0 1px 0 rgba(255,255,255,.24);
+  --g-shadow: 0 24px 64px rgba(18,12,34,.35);
+  --g-inset: inset 0 1px 0 rgba(255,255,255,.18);
   --r: 26px;
   --r-sm: 16px;
   --maxw: 1180px;
-  --sec-y: 34px;
+  --sec-y: 54px;
   --ease: cubic-bezier(.2,.7,.2,1);
 }
 
@@ -40,9 +40,9 @@ body {
 .d3 { font-size: clamp(21px, 2.5vw, 30px); line-height: 1.04; font-weight: 700; letter-spacing: -.01em; }
 .d4 { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.14; font-weight: 700; letter-spacing: .005em; }
 .lime { color: var(--accent); }
-.lede { font-size: clamp(15px, 1.35vw, 17.5px); color: var(--paper-2); max-width: 44ch; }
-.body-s { font-size: 14.5px; color: var(--paper-2); line-height: 1.66; }
-.kicker { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--paper-3); }
+.lede { font-size: clamp(15px, 1.35vw, 17.5px); color: var(--paper-2); max-width: 40ch; font-weight: 400; line-height: 1.7; letter-spacing: 0.015em; }
+.body-s { font-size: 14.5px; color: var(--paper-2); line-height: 1.7; font-weight: 400; letter-spacing: 0.01em; }
+.kicker { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--paper-2); opacity: 0.8; }
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 18px; }
 
 /* GLASS */
@@ -72,8 +72,8 @@ body {
 
 /* BUTTONS */
 .btn {
-  display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 999px;
-  font-size: 12.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; transition: .35s var(--ease); white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; transition: .35s var(--ease); white-space: nowrap;
   border: none; cursor: pointer; text-decoration: none; font-family: inherit;
 }
 .btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
