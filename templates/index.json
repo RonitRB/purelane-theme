@@ -40,53 +40,100 @@
         "cta_2_link": "#how"
       }
     },
+    "product_grid": {
+      "type": "product-grid",
+      "settings": {
+        "kicker": "Bestsellers",
+        "title": "Loved by 30,000 homes",
+        "limit": 4
+      }
+    },
+    "combos": {
+      "type": "combos",
+      "settings": {
+        "kicker": "Pre-built to save you money",
+        "heading": "Best selling combos",
+        "lede": "<p>Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.<\/p>",
+        "products_to_show": 5,
+        "save_prefix": "You save",
+        "save_em_prefix": "Save",
+        "products_count_suffix": "products",
+        "fine_print": "Inclusive of all taxes · COD available",
+        "button_label": "Shop bundle",
+        "button_link": "#bundles",
+        "swipe_cue": "Swipe for more combos",
+        "rail_note": "<p>Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay.<\/p>",
+        "rail_aria_label": "Best selling combos"
+      }
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "bundle_1": {
+          "type": "tier",
+          "settings": {
+            "title": "Starter",
+            "subtitle": "The essentials",
+            "price": "₹999",
+            "compare_at": "₹1,299",
+            "features": "2 core cleaners\n1 microfibre cloth\nStandard shipping",
+            "cta_label": "Shop Starter",
+            "highlight": false
+          }
+        },
+        "bundle_2": {
+          "type": "tier",
+          "settings": {
+            "title": "Most Popular",
+            "subtitle": "Everything you need",
+            "price": "₹1,499",
+            "compare_at": "₹1,899",
+            "features": "4 core cleaners\n2 microfibre cloths\nFree express shipping\nRefill discount",
+            "cta_label": "Shop Most Popular",
+            "highlight": true
+          }
+        },
+        "bundle_3": {
+          "type": "tier",
+          "settings": {
+            "title": "Whole Home",
+            "subtitle": "The complete set",
+            "price": "₹2,499",
+            "compare_at": "₹3,199",
+            "features": "All 8 cleaners\n4 microfibre cloths\nFree express shipping\nLifetime refill discount",
+            "cta_label": "Shop Whole Home",
+            "highlight": false
+          }
+        }
+      },
+      "block_order": [
+        "bundle_1",
+        "bundle_2",
+        "bundle_3"
+      ],
+      "settings": {
+        "kicker": "Bundles",
+        "title": "Choose your clean",
+        "highlight_badge": "Most Popular"
+      }
+    },
     "reviews": {
       "type": "reviews",
       "blocks": {
         "review_1": {
-          "type": "review",
-          "settings": {
-            "title": "Works like a charm",
-            "text": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
-            "author": "Anita",
-            "product_tag": "Laundry detergent"
-          }
+          "type": "review_reference"
         },
         "review_2": {
-          "type": "review",
-          "settings": {
-            "title": "Best dishwash ever",
-            "text": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
-            "author": "Priya",
-            "product_tag": "Dishwash gel"
-          }
+          "type": "review_reference"
         },
         "review_3": {
-          "type": "review",
-          "settings": {
-            "title": "Great product, great packaging",
-            "text": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
-            "author": "Sunita",
-            "product_tag": "Liquid handwash"
-          }
+          "type": "review_reference"
         },
         "review_4": {
-          "type": "review",
-          "settings": {
-            "title": "Dog friendly",
-            "text": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
-            "author": "Rohit S.",
-            "product_tag": "Floor cleaner"
-          }
+          "type": "review_reference"
         },
         "review_5": {
-          "type": "review",
-          "settings": {
-            "title": "Sparkling taps again",
-            "text": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
-            "author": "Verified buyer",
-            "product_tag": "Tap cleaner"
-          }
+          "type": "review_reference"
         }
       },
       "block_order": [
@@ -102,84 +149,13 @@
         "rating_text": "from 8,000+ reviews",
         "social_proof": "Loved by <b>12 lakh+<\/b> homes"
       }
-    },
-    "combos": {
-      "type": "combos",
-      "settings": {
-        "kicker": "Pre-built to save you money",
-        "heading": "Best selling combos",
-        "lede": "<p>Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.<\/p>",
-        "products_to_show": 5,
-        "featured_badge_match": "Best value",
-        "featured_save_label": "Biggest saving",
-        "save_prefix": "You save",
-        "save_em_prefix": "Save",
-        "products_count_suffix": "products",
-        "fine_print": "Inclusive of all taxes · COD available",
-        "button_label": "Shop bundle",
-        "button_link": "#bundles",
-        "swipe_cue": "Swipe for more combos",
-        "rail_note": "<p>Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay.<\/p>",
-        "rail_aria_label": "Best selling combos"
-      }
-    },
-    "product_grid": {
-      "type": "product-grid",
-      "settings": {
-        "kicker": "Bestsellers",
-        "title": "Loved by 30,000 homes",
-        "limit": 4
-      }
-    },
-    "bundles": {
-      "type": "bundles",
-      "blocks": {
-        "bundle_1": {
-          "type": "collection",
-          "settings": {
-            "title": "Kitchen bundle",
-            "subtitle": "Grease, dishes & more"
-          }
-        },
-        "bundle_2": {
-          "type": "collection",
-          "settings": {
-            "title": "Bathroom bundle",
-            "subtitle": "Deep clean & disinfect"
-          }
-        },
-        "bundle_3": {
-          "type": "collection",
-          "settings": {
-            "title": "Laundry bundle",
-            "subtitle": "Softer, fresher wash"
-          }
-        },
-        "bundle_4": {
-          "type": "collection",
-          "settings": {
-            "title": "Hard water bundle",
-            "subtitle": "Melt away limescale"
-          }
-        }
-      },
-      "block_order": [
-        "bundle_1",
-        "bundle_2",
-        "bundle_3",
-        "bundle_4"
-      ],
-      "settings": {
-        "kicker": "Bundle categories",
-        "title": "Find the right bundle for you"
-      }
     }
   },
   "order": [
     "hero",
-    "reviews",
-    "combos",
     "product_grid",
-    "bundles"
+    "combos",
+    "bundles",
+    "reviews"
   ]
 }
