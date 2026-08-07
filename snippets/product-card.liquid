@@ -44,7 +44,7 @@
       {%- if product.featured_image -%}
         {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 768px) 100vw, 33vw' }}
       {%- else -%}
-        <div class="pimg p-floor" style="width: 100%; height: 100%;"></div>
+        <img src="{{ 'fallback-bottle.png' | asset_url }}" alt="Purelane" loading="lazy" class="fallback-img">
       {%- endif -%}
     </a>
     
@@ -70,7 +70,7 @@
     </div>
   {%- else -%}
     <div class="shot">
-      <div class="pimg p-floor" style="width: 100%; height: 100%;"></div>
+      <img src="{{ 'fallback-bottle.png' | asset_url }}" alt="Purelane" loading="lazy" class="fallback-img">
     </div>
     
     <div class="card-info">
@@ -94,93 +94,103 @@
     flex-direction: column;
     text-decoration: none;
     height: 100%;
-    transition: transform .4s var(--ease), border-color .4s var(--ease);
-  }
-  .purelane-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(236,230,247,.3);
   }
   
   .purelane-card .shot {
-    aspect-ratio: 4 / 5;
-    background: linear-gradient(160deg, rgba(236,230,247,.08), rgba(75,58,143,.12));
-    border-bottom: 1px solid rgba(236,230,247,.1);
+    aspect-ratio: 1 / 1;
+    background: #F4F3F0;
+    border-bottom: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
     display: grid;
     place-items: center;
+    border-radius: var(--r) var(--r) 0 0;
   }
   .purelane-card .shot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    mix-blend-mode: multiply;
   }
-  .purelane-card .pimg {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform: scale(0.85);
+  .purelane-card .shot .fallback-img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .purelane-card:hover .shot img,
+  .purelane-card:hover .shot .fallback-img {
+    transform: scale(1.03);
   }
 
   .purelane-card .card-info {
-    padding: 24px;
+    padding: 32px 24px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
   }
   
   .purelane-card .rate {
-    font-size: 13px;
-    color: var(--paper-2);
+    font-size: 11px;
+    color: var(--text-sub);
     margin-bottom: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   .purelane-card .rate b {
-    color: var(--accent);
-    font-weight: 700;
+    color: var(--text-main);
+    font-weight: 600;
   }
   
   .purelane-card .card-title {
-    font-size: 18px;
+    font-size: 22px;
     font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    color: var(--surface);
-    line-height: 1.3;
-    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   
   .purelane-card .pr {
     margin-top: auto;
     display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 24px;
   }
   .purelane-card .pr strong {
-    font-family: 'Outfit', sans-serif;
-    font-size: 24px;
-    color: var(--surface);
-    font-weight: 800;
+    font-size: 20px;
+    color: var(--text-main);
+    font-weight: 600;
   }
   .purelane-card .pr s {
     font-size: 14px;
-    color: var(--paper-3);
+    color: var(--text-sub);
+    text-decoration: line-through;
+    opacity: 0.7;
   }
   .purelane-card .pr .badge {
     margin-left: auto;
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
     border-radius: 999px;
-    background: rgba(240,160,60,.15);
-    color: var(--accent);
+    background: var(--border-color);
+    color: var(--text-main);
     font-style: normal;
   }
   
   @media(max-width: 768px) {
-    .purelane-card .card-info { padding: 18px; }
-    .purelane-card .card-title { font-size: 16px; }
-    .purelane-card .pr strong { font-size: 20px; }
+    .purelane-card .card-info { padding: 24px 20px; }
   }
 {% endstyle %}

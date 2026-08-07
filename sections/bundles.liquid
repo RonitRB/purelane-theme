@@ -1,4 +1,4 @@
-<section class="sec bundles-sec" id="shopify-section-{{ section.id }}">
+<section class="sec theme-dark bundles-sec" id="shopify-section-{{ section.id }}">
   <div class="wrap">
     <div class="panel-head rv">
       {%- if section.settings.kicker != blank -%}
@@ -108,11 +108,12 @@
   #shopify-section-{{ section.id }} .tier {
     flex: 1;
     min-width: 280px;
-    padding: 32px 24px;
+    padding: 40px 32px;
     display: flex;
     flex-direction: column;
     text-align: center;
     border-radius: var(--r);
+    border: 1px solid rgba(255,255,255,0.06);
     transition: transform .4s var(--ease), border-color .4s var(--ease);
   }
   #shopify-section-{{ section.id }} .tier:hover {
@@ -138,12 +139,28 @@
     color: var(--accent);
   }
 
+  @media(min-width: 760px) {
+    #shopify-section-{{ section.id }} .tier.best {
+      transform: scale(1.05);
+      z-index: 2;
+    }
+    #shopify-section-{{ section.id }} .tier.best:hover {
+      transform: scale(1.08);
+    }
+  }
+
   #shopify-section-{{ section.id }} .tier-head h3 {
-    display: none; /* Reference uses qty for main title? Wait, no. */
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--surface);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
   }
   
-  #shopify-section-{{ section.id }} .tier-head {
-    /* Use exact reference typography here */
+  #shopify-section-{{ section.id }} .tier-head p {
+    font-size: 14px;
+    color: rgba(236,230,247,0.5);
+    margin: 0;
   }
 
   #shopify-section-{{ section.id }} .tier-price {
@@ -176,7 +193,7 @@
     display: flex;
     gap: 9px;
     font-size: 13px;
-    color: var(--paper-2);
+    color: var(--text-sub);
   }
   #shopify-section-{{ section.id }} .features li svg {
     width: 14px;
@@ -189,6 +206,8 @@
   #shopify-section-{{ section.id }} .tier-foot .btn {
     width: 100%;
     justify-content: center;
+    height: 56px;
+    font-size: 16px;
   }
 {% endstyle %}
 

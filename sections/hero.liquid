@@ -1,20 +1,124 @@
-<section class="hero purelane-hero" id="shopify-section-{{ section.id }}">
-  <div class="hero-grid">
+<section class="hero purelane-hero theme-dark" id="shopify-section-{{ section.id }}">
+  
+  <div class="hero-prod" id="heroProd">
+    <div class="hstage" id="hstage">
+      {%- assign coll = section.settings.collection -%}
+      {%- assign prod1 = coll.products[0] -%}
+      {%- assign prod2 = coll.products[1] -%}
+      {%- assign prod3 = coll.products[2] -%}
+      
+      {%- assign p1_price = 45000 -%}
+      {%- assign p1_compare = 50000 -%}
+      {%- if prod1 -%}
+        {%- assign p1_price = prod1.price -%}
+        {%- assign p1_compare = prod1.compare_at_price | default: prod1.price -%}
+      {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <div class="badges glass-2" aria-label="Product promises">
-        {%- for block in section.blocks -%}
-          <div class="badge" {{ block.shopify_attributes }}>
-            <span class="bi">{{ block.settings.icon_svg }}</span>
-            <span>{{ block.settings.label | newline_to_br }}</span>
+      <div class="hslide hs1 on" data-n="1">
+        {%- if prod1 and prod1.featured_image -%}
+          {{ prod1.featured_image | image_url: height: 1200 | image_tag: class: 'hp a d1', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp a d1"><span>{{ prod1.title | default: 'Purelane' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        <div class="ptag">
+          <div>
+            <span class="lbl">Single bottle</span>
+            <span class="val">
+              <strong>{{ p1_price | money_without_trailing_zeros }}</strong>
+              {%- if p1_compare > p1_price -%}<s>{{ p1_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
           </div>
-        {%- endfor -%}
+          {%- if p1_compare > p1_price -%}
+            <span class="cut">Save {{ p1_compare | minus: p1_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+        </div>
       </div>
-    {%- endif -%}
+      
+      {%- assign p2_price = 85000 -%}
+      {%- assign p2_compare = 100000 -%}
+      {%- if prod1 and prod2 -%}
+        {%- assign p2_price = p1_price | plus: prod2.price -%}
+        {%- assign p2_compare_item = prod2.compare_at_price | default: prod2.price -%}
+        {%- assign p2_compare = p1_compare | plus: p2_compare_item -%}
+      {%- endif -%}
 
+      <div class="hslide hs2" data-n="2">
+        {%- if prod2 and prod2.featured_image -%}
+          {{ prod2.featured_image | image_url: height: 1200 | image_tag: class: 'hp a d1', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp a d1"><span>{{ prod2.title | default: 'Refill' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        {%- if prod1 and prod1.featured_image -%}
+          {{ prod1.featured_image | image_url: height: 1200 | image_tag: class: 'hp b d2', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp b d2"><span>{{ prod1.title | default: 'Bottle' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        
+        <div class="ptag">
+          <div>
+            <span class="lbl">Any 2 products</span>
+            <span class="val">
+              <strong>{{ p2_price | money_without_trailing_zeros }}</strong>
+              {%- if p2_compare > p2_price -%}<s>{{ p2_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
+          </div>
+          {%- if p2_compare > p2_price -%}
+            <span class="cut">Save {{ p2_compare | minus: p2_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+      
+      {%- assign p3_price = 120000 -%}
+      {%- assign p3_compare = 150000 -%}
+      {%- if prod1 and prod2 and prod3 -%}
+        {%- assign p3_price = p2_price | plus: prod3.price -%}
+        {%- assign p3_compare_item = prod3.compare_at_price | default: prod3.price -%}
+        {%- assign p3_compare = p2_compare | plus: p3_compare_item -%}
+      {%- endif -%}
+
+      <div class="hslide hs3" data-n="3">
+        {%- if prod2 and prod2.featured_image -%}
+          {{ prod2.featured_image | image_url: height: 1200 | image_tag: class: 'hp a d1', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp a d1"><span>{{ prod2.title | default: 'Refill' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        {%- if prod3 and prod3.featured_image -%}
+          {{ prod3.featured_image | image_url: height: 1200 | image_tag: class: 'hp b d2', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp b d2"><span>{{ prod3.title | default: 'Cloth' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        {%- if prod1 and prod1.featured_image -%}
+          {{ prod1.featured_image | image_url: height: 1200 | image_tag: class: 'hp c d3', loading: 'eager' }}
+        {%- else -%}
+          <div class="elegant-fallback hp c d3"><span>{{ prod1.title | default: 'Bottle' | truncatewords: 2, '' }}</span></div>
+        {%- endif -%}
+        
+        <div class="ptag">
+          <div>
+            <span class="lbl">Any 3 products</span>
+            <span class="val">
+              <strong>{{ p3_price | money_without_trailing_zeros }}</strong>
+              {%- if p3_compare > p3_price -%}<s>{{ p3_compare | money_without_trailing_zeros }}</s>{%- endif -%}
+            </span>
+          </div>
+          {%- if p3_compare > p3_price -%}
+            <span class="cut">Save {{ p3_compare | minus: p3_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hdots" id="hdots">
+    <button type="button" class="on" aria-label="Show 1 product"></button>
+    <button type="button" aria-label="Show 2 products"></button>
+    <button type="button" aria-label="Show 3 products"></button>
+  </div>
+
+  <div class="hero-grid">
     <div class="hero-copy">
       {%- assign heading_parts = section.settings.heading | split: section.settings.heading_highlight -%}
-      <h1 class="d1 rv in">
+      <h1 class="rv in">
         {%- if heading_parts.size > 1 -%}
           {{ heading_parts[0] | newline_to_br }}<span class="lime">{{ section.settings.heading_highlight }}</span>{{ heading_parts[1] | newline_to_br }}
         {%- else -%}
@@ -22,15 +126,9 @@
         {%- endif -%}
       </h1>
       
-      <div class="rule rv rv-d1">
-        <i></i>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
-        <i></i>
-      </div>
+      <div class="lede rv rv-d1">{{ section.settings.lede }}</div>
       
-      <div class="lede rv rv-d2">{{ section.settings.lede }}</div>
-      
-      <div class="hero-cta rv rv-d3">
+      <div class="hero-cta rv rv-d2">
         {%- if section.settings.cta_1_label != blank -%}
           <a class="btn btn-primary" href="{{ section.settings.cta_1_link }}">
             {{ section.settings.cta_1_label }}
@@ -43,9 +141,9 @@
       </div>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="badgestrip rv rv-d4">
+        <div class="badgestrip rv rv-d3">
           {%- for block in section.blocks -%}
-            <div class="glass-2" {{ block.shopify_attributes }}>
+            <div {{ block.shopify_attributes }}>
               {{ block.settings.icon_svg }}
               {{ block.settings.label | strip_newlines }}
             </div>
@@ -53,116 +151,17 @@
         </div>
       {%- endif -%}
     </div>
-
-    <div class="hero-prod" id="heroProd">
-      <div class="hstage" id="hstage">
-        {%- assign coll = section.settings.collection -%}
-        {%- assign prod1 = coll.products[0] -%}
-        {%- assign prod2 = coll.products[1] -%}
-        {%- assign prod3 = coll.products[2] -%}
-        
-        {%- assign p1_price = 45000 -%}
-        {%- assign p1_compare = 50000 -%}
-        {%- if prod1 -%}
-          {%- assign p1_price = prod1.price -%}
-          {%- assign p1_compare = prod1.compare_at_price | default: prod1.price -%}
-        {%- endif -%}
-
-        <div class="hslide hs1 on" data-n="1">
-          {%- if prod1 and prod1.featured_image -%}
-            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-          {%- else -%}
-            <div class="pimg p-kbtl hp a d1"></div>
-          {%- endif -%}
-          <div class="glass-2 ptag">
-            <span class="lbl">Single bottle</span>
-            <span class="val">
-              <strong>{{ p1_price | money_without_trailing_zeros }}</strong>
-              {%- if p1_compare > p1_price -%}<s>{{ p1_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-            </span>
-            {%- if p1_compare > p1_price -%}
-              <span class="cut">Save {{ p1_compare | minus: p1_price | money_without_trailing_zeros }}</span>
-            {%- endif -%}
+    
+    {%- if section.blocks.size > 0 -%}
+      <div class="badges" aria-label="Product promises">
+        {%- for block in section.blocks -%}
+          <div class="badge rv rv-d3" {{ block.shopify_attributes }}>
+            <span class="bi">{{ block.settings.icon_svg }}</span>
+            <span>{{ block.settings.label | strip_newlines }}</span>
           </div>
-        </div>
-        
-        {%- assign p2_price = 85000 -%}
-        {%- assign p2_compare = 100000 -%}
-        {%- if prod1 and prod2 -%}
-          {%- assign p2_price = p1_price | plus: prod2.price -%}
-          {%- assign p2_compare_item = prod2.compare_at_price | default: prod2.price -%}
-          {%- assign p2_compare = p1_compare | plus: p2_compare_item -%}
-        {%- endif -%}
-
-        <div class="hslide hs2" data-n="2">
-          {%- if prod2 and prod2.featured_image -%}
-            {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-          {%- else -%}
-            {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
-          {%- endif -%}
-          {%- if prod1 and prod1.featured_image -%}
-            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'hp b d2 placeholder' }}
-          {%- endif -%}
-          
-          <div class="glass-2 ptag">
-            <span class="lbl">Any 2 products</span>
-            <span class="val">
-              <strong>{{ p2_price | money_without_trailing_zeros }}</strong>
-              {%- if p2_compare > p2_price -%}<s>{{ p2_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-            </span>
-            {%- if p2_compare > p2_price -%}
-              <span class="cut">Save {{ p2_compare | minus: p2_price | money_without_trailing_zeros }}</span>
-            {%- endif -%}
-          </div>
-        </div>
-        
-        {%- assign p3_price = 120000 -%}
-        {%- assign p3_compare = 150000 -%}
-        {%- if prod1 and prod2 and prod3 -%}
-          {%- assign p3_price = p2_price | plus: prod3.price -%}
-          {%- assign p3_compare_item = prod3.compare_at_price | default: prod3.price -%}
-          {%- assign p3_compare = p2_compare | plus: p3_compare_item -%}
-        {%- endif -%}
-
-        <div class="hslide hs3" data-n="3">
-          {%- if prod2 and prod2.featured_image -%}
-            {{ prod2.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
-          {%- else -%}
-            {{ 'product-2' | placeholder_svg_tag: 'hp a d1 placeholder' }}
-          {%- endif -%}
-          {%- if prod3 and prod3.featured_image -%}
-            {{ prod3.featured_image | image_url: height: 800 | image_tag: class: 'hp b d2', loading: 'eager' }}
-          {%- else -%}
-            {{ 'product-3' | placeholder_svg_tag: 'hp b d2 placeholder' }}
-          {%- endif -%}
-          {%- if prod1 and prod1.featured_image -%}
-            {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp c d3', loading: 'eager' }}
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'hp c d3 placeholder' }}
-          {%- endif -%}
-          
-          <div class="glass-2 ptag">
-            <span class="lbl">Any 3 products</span>
-            <span class="val">
-              <strong>{{ p3_price | money_without_trailing_zeros }}</strong>
-              {%- if p3_compare > p3_price -%}<s>{{ p3_compare | money_without_trailing_zeros }}</s>{%- endif -%}
-            </span>
-            {%- if p3_compare > p3_price -%}
-              <span class="cut">Save {{ p3_compare | minus: p3_price | money_without_trailing_zeros }}</span>
-            {%- endif -%}
-          </div>
-        </div>
+        {%- endfor -%}
       </div>
-      
-      <div class="hdots" id="hdots">
-        <button type="button" class="on" aria-label="Show 1 product"></button>
-        <button type="button" aria-label="Show 2 products"></button>
-        <button type="button" aria-label="Show 3 products"></button>
-      </div>
-    </div>
-
+    {%- endif -%}
   </div>
 </section>
 
@@ -173,178 +172,51 @@
     min-height: 100svh;
     display: flex;
     align-items: flex-end;
-    padding: 150px 0 var(--sec-y);
-    background: linear-gradient(178deg, #1ea38d 0%, #0b8578 22%, #017069 48%, #4b3a8f 74%, #01524e 100%);
+    padding: 0;
+    background: var(--ink);
+    overflow: hidden;
   }
-  .purelane-hero::before {
-    content: "";
+  
+  /* PRODUCT CAROUSEL as Cinematic Background */
+  .purelane-hero .hero-prod {
     position: absolute;
     inset: 0;
     z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(102deg, rgba(1,45,42,.68) 0%, rgba(1,45,42,.40) 30%, rgba(1,45,42,.10) 52%, transparent 66%);
-  }
-  @media(max-width: 900px) {
-    .purelane-hero::before {
-      background: linear-gradient(180deg, rgba(1,45,42,.44) 0%, rgba(1,45,42,.22) 34%, rgba(1,40,38,.60) 100%);
-    }
-  }
-  
-  .purelane-hero .hero-grid {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 18px;
     width: 100%;
-    position: relative;
-    z-index: 2;
+    height: 100%;
+    pointer-events: none;
   }
   
-  .purelane-hero .hero-copy {
-    max-width: 600px;
-    position: relative;
-    z-index: 3;
-  }
-  .purelane-hero h1 {
-    margin-bottom: 20px;
-    text-shadow: 0 6px 40px rgba(2,20,19,.55);
-  }
-  .purelane-hero .rule {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    margin: 0 0 20px;
-    max-width: 270px;
-  }
-  .purelane-hero .rule i {
-    height: 1px;
-    flex: 1;
-    background: linear-gradient(90deg, rgba(236,230,247,.44), transparent);
-  }
-  .purelane-hero .rule svg {
-    width: 16px;
-    height: 16px;
-    color: var(--accent);
-    flex: 0 0 auto;
-  }
-  .purelane-hero .hero-cta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 36px;
-  }
-  
-  /* PRODUCT CAROUSEL */
-  .purelane-hero .hero-prod {
+  /* Soft Spotlight Bloom */
+  .purelane-hero .hero-prod::before {
+    content: '';
     position: absolute;
-    right: 3%;
-    bottom: 28px;
-    width: min(50vw, 560px);
-    z-index: 2;
-    filter: drop-shadow(0 34px 54px rgba(2,20,19,.6));
-  }
-  @media(max-width: 1200px) {
-    .purelane-hero .hero-copy { max-width: 470px; }
-    .purelane-hero .hero-prod { width: min(44vw, 440px); right: 4%; }
-  }
-  @media(max-width: 900px) {
-    .purelane-hero { align-items: flex-end; padding-top: 132px; }
-    .purelane-hero .hero-copy { max-width: none; }
-    .purelane-hero .hero-prod { position: relative; right: auto; bottom: auto; width: min(88vw, 420px); margin: 20px auto 0; }
-  }
-  
-  /* BADGES */
-  .purelane-hero .badges {
-    position: absolute;
-    right: 24px;
     top: 50%;
+    right: 15%;
     transform: translateY(-50%);
-    width: 96px;
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 16px 8px;
-    border-radius: 20px;
-  }
-  .purelane-hero .badge {
-    text-align: center;
-    padding: 11px 4px;
-  }
-  .purelane-hero .badge + .badge {
-    border-top: 1px solid rgba(236,230,247,.14);
-  }
-  .purelane-hero .badge .bi {
-    width: 38px;
-    height: 38px;
-    margin: 0 auto 8px;
+    width: 60vh;
+    height: 60vh;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%);
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: rgba(236,230,247,.10);
-    border: 1px solid rgba(236,230,247,.22);
-    color: var(--accent);
-  }
-  .purelane-hero .badge .bi svg {
-    width: 19px;
-    height: 19px;
-  }
-  .purelane-hero .badge span {
-    display: block;
-    font-size: 8.5px;
-    font-weight: 700;
-    letter-spacing: .11em;
-    text-transform: uppercase;
-    color: var(--paper-2);
-    line-height: 1.34;
-  }
-  @media(max-width: 900px) {
-    .purelane-hero .badges { display: none; }
-  }
-  
-  /* MOBILE BADGES */
-  .purelane-hero .badgestrip {
-    display: flex;
-    gap: 8px;
-    margin-top: 24px;
-  }
-  .purelane-hero .badgestrip div {
-    flex: 1;
-    text-align: center;
-    padding: 11px 6px;
-    border-radius: 14px;
-    font-size: 8.5px;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--paper-2);
-    line-height: 1.3;
-  }
-  .purelane-hero .badgestrip svg {
-    width: 18px;
-    height: 18px;
-    margin: 0 auto 6px;
-    color: var(--accent);
-  }
-  @media(min-width: 901px) {
-    .purelane-hero .badgestrip { display: none; }
+    z-index: 0;
+    pointer-events: none;
   }
   
   /* STAGE AND SLIDES */
   .purelane-hero .hstage {
     position: relative;
     width: 100%;
-    height: clamp(380px, 74svh, 680px);
+    height: 100%;
   }
   .purelane-hero .hslide {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding-right: 2%;
+    align-items: center;
+    justify-content: flex-end; /* Align products to right */
+    padding-right: 5%;
     opacity: 0;
-    pointer-events: none;
-    transition: opacity .85s var(--ease);
+    transition: opacity 1.2s var(--ease);
   }
   .purelane-hero .hslide.on {
     opacity: 1;
@@ -356,111 +228,242 @@
     object-fit: contain;
     flex: 0 0 auto;
     opacity: 0;
-    transform: translateY(28px) scale(.94);
-    transition: opacity .8s var(--ease), transform .8s var(--ease);
-    filter: drop-shadow(0 26px 40px rgba(1,22,20,.66));
+    transform: translateY(40px) scale(0.95);
+    transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+    filter: drop-shadow(0 34px 54px rgba(18,12,34,.6));
   }
   .purelane-hero .hslide.on .hp {
     opacity: 1;
-    transform: none;
+    transform: scale(1.2); /* Massive scale for premium feel */
   }
-  .purelane-hero .hslide.on .hp.d1 { transition-delay: .06s; }
-  .purelane-hero .hslide.on .hp.d2 { transition-delay: .30s; }
-  .purelane-hero .hslide.on .hp.d3 { transition-delay: .54s; }
+  @media(min-width: 900px) {
+    .purelane-hero .hslide.on .hp { transform: scale(1.5) translateX(-10%); }
+  }
+  .purelane-hero .hslide.on .hp.d1 { transition-delay: 0.1s; }
+  .purelane-hero .hslide.on .hp.d2 { transition-delay: 0.3s; }
+  .purelane-hero .hslide.on .hp.d3 { transition-delay: 0.5s; }
   
   /* Z-INDEX AND SIZING (using real images) */
-  .purelane-hero .hs1 .a { height: 100%; z-index: 3; }
-  .purelane-hero .hs2 .a { height: 80%; margin-right: -8%; z-index: 1; }
-  .purelane-hero .hs2 .b { height: 97%; z-index: 3; }
-  .purelane-hero .hs3 .a { height: 75%; margin-right: -8%; z-index: 1; order: 1; }
-  .purelane-hero .hs3 .c { height: 97%; z-index: 3; order: 2; }
-  .purelane-hero .hs3 .b { height: 79%; margin-left: -8%; z-index: 2; order: 3; }
+  .purelane-hero .hs1 .a { height: 75%; z-index: 3; }
+  .purelane-hero .hs2 .a { height: 60%; margin-right: -4%; z-index: 1; }
+  .purelane-hero .hs2 .b { height: 75%; z-index: 3; }
+  .purelane-hero .hs3 .a { height: 55%; margin-right: -4%; z-index: 1; order: 1; }
+  .purelane-hero .hs3 .c { height: 75%; z-index: 3; order: 2; }
+  .purelane-hero .hs3 .b { height: 60%; margin-left: -4%; z-index: 2; order: 3; }
   
-  /* PRICE TAG */
+  /* PRICE TAG PILL */
   .purelane-hero .ptag {
-    position: absolute;
-    left: 8%;
-    bottom: 6%;
-    z-index: 6;
-    padding: 11px 14px 12px;
-    border-radius: var(--r-sm, 16px);
-    max-width: 52%;
+    position: relative;
+    z-index: 10;
+    margin-left: 32px;
+    padding: 12px 24px;
+    border-radius: 999px; /* Rounded pill like Aurai */
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity .8s var(--ease) .62s, transform .8s var(--ease) .62s;
+    transition: opacity 0.8s var(--ease) 0.6s, transform 0.8s var(--ease) 0.6s;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    pointer-events: auto;
+    transform: translateX(20px);
   }
   .purelane-hero .hslide.on .ptag {
     opacity: 1;
-    transform: none;
+    transform: translateX(0);
   }
   .purelane-hero .ptag .lbl {
-    display: block;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: .17em;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: rgba(255,255,255,0.7);
   }
   .purelane-hero .ptag .val {
     display: flex;
-    align-items: baseline;
-    gap: 7px;
-    margin-top: 5px;
+    align-items: center;
+    gap: 8px;
   }
   .purelane-hero .ptag .val strong {
-    font-family: 'Outfit', sans-serif;
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -.02em;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--surface);
-    line-height: 1;
   }
   .purelane-hero .ptag .val s {
-    font-size: 12px;
-    color: var(--paper-3);
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
   }
   .purelane-hero .ptag .cut {
-    display: inline-block;
-    margin-top: 7px;
-    font-size: 8.4px;
-    font-weight: 800;
-    letter-spacing: .11em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: rgba(240,160,60,.20);
-    border: 1px solid rgba(240,160,60,.38);
-    color: var(--accent);
+    display: none;
   }
   
+  /* HERO COPY LAYER (Bottom Aligned) */
+  .purelane-hero .hero-grid {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 24px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none; /* Let touches pass through where empty */
+    padding-bottom: 48px;
+  }
+  @media(min-width: 900px) {
+    .purelane-hero .hero-grid {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: 64px;
+    }
+  }
+  
+  .purelane-hero .hero-copy {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    max-width: 600px;
+  }
+  .purelane-hero h1 {
+    font-size: clamp(48px, 8vw, 100px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 300;
+    margin-bottom: 24px;
+    color: var(--surface);
+  }
+  .purelane-hero .lime { color: var(--accent); font-weight: 400; }
+  
+  .purelane-hero .lede {
+    font-size: clamp(16px, 1.5vw, 20px);
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  
+  .purelane-hero .hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  /* DOTS */
   .purelane-hero .hdots {
     display: flex;
-    gap: 7px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 8px;
+    gap: 8px;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: auto;
   }
   .purelane-hero .hdots button {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     padding: 0;
     border-radius: 50%;
-    background: rgba(236,230,247,.28);
-    transition: .4s var(--ease);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    transition: 0.4s var(--ease);
+    cursor: pointer;
   }
   .purelane-hero .hdots button.on {
-    background: var(--accent);
-    width: 20px;
+    background: var(--surface);
+    width: 24px;
     border-radius: 999px;
   }
   .purelane-hero .hdots button:hover {
-    background: rgba(236,230,247,.5);
+    background: rgba(255,255,255,0.5);
+  }
+  
+  /* BADGES (Now floating right on desktop) */
+  .purelane-hero .badges {
+    display: none;
+  }
+  @media(min-width: 900px) {
+    .purelane-hero .badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: auto;
+    }
+    .purelane-hero .badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      padding: 10px 20px;
+      border-radius: 999px; /* Aurai pill style */
+      color: var(--surface);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .purelane-hero .badge .bi {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .purelane-hero .badge .bi svg {
+      width: 100%;
+      height: 100%;
+    }
+    .purelane-hero .badge span:not(.bi) {
+      white-space: nowrap;
+    }
+  }
+  
+  /* MOBILE BADGES (Pills at bottom) */
+  .purelane-hero .badgestrip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    pointer-events: auto;
+  }
+  .purelane-hero .badgestrip div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--surface);
+    white-space: nowrap;
+  }
+  .purelane-hero .badgestrip svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+  }
+  @media(min-width: 901px) {
+    .purelane-hero .badgestrip { display: none; }
   }
   
   @media(max-width: 900px) {
-    .purelane-hero .hstage { height: clamp(300px, 44svh, 430px); }
-    .purelane-hero .ptag { padding: 9px 12px 10px; border-radius: 14px; max-width: 58%; }
-    .purelane-hero .ptag .val strong { font-size: 20px; }
+    .purelane-hero { min-height: 100svh; }
+    .purelane-hero .hslide { padding-right: 0; justify-content: center; align-items: center; padding-bottom: 20vh; }
+    .purelane-hero .hslide.on .hp { transform: scale(1.1); }
+    .purelane-hero .ptag { right: auto; left: 50%; top: 60%; transform: translateX(-50%); }
+    .purelane-hero .hslide.on .ptag { transform: translateX(-50%) translateY(0); }
   }
 {% endstyle %}
 
