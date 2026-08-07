@@ -17,7 +17,7 @@
   --r: 26px;
   --r-sm: 16px;
   --maxw: 1180px;
-  --sec-y: 54px;
+  --sec-y: 34px;
   --ease: cubic-bezier(.2,.7,.2,1);
 }
 
@@ -40,9 +40,9 @@ body {
 .d3 { font-size: clamp(21px, 2.5vw, 30px); line-height: 1.04; font-weight: 700; letter-spacing: -.01em; }
 .d4 { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.14; font-weight: 700; letter-spacing: .005em; }
 .lime { color: var(--accent); }
-.lede { font-size: clamp(15px, 1.35vw, 17.5px); color: var(--paper-2); max-width: 40ch; font-weight: 400; line-height: 1.7; letter-spacing: 0.015em; }
-.body-s { font-size: 14.5px; color: var(--paper-2); line-height: 1.7; font-weight: 400; letter-spacing: 0.01em; }
-.kicker { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--paper-2); opacity: 0.8; }
+.lede { font-size: clamp(15px, 1.35vw, 17.5px); color: var(--paper-2); max-width: 44ch; }
+.body-s { font-size: 14.5px; color: var(--paper-2); line-height: 1.66; }
+.kicker { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--paper-3); }
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 18px; }
 
 /* GLASS */
