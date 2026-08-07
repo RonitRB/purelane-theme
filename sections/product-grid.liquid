@@ -1,0 +1,134 @@
+<section class="sec product-grid-sec" id="shopify-section-{{ section.id }}">
+  <div class="wrap">
+    <div class="panel-head rv">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker">{{ section.settings.kicker }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      <div class="rule">
+        <i></i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+        <i></i>
+      </div>
+    </div>
+    
+    <div class="shelf">
+      {%- assign collection = section.settings.collection -%}
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: section.settings.limit -%}
+          <div class="rv rv-d{{ forloop.index | modulo: 4 }}">
+            {% render 'product-card', product: product %}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.limit) -%}
+          <div class="rv rv-d{{ forloop.index | modulo: 4 }}">
+            {% render 'product-card', product: null %}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .product-grid-sec {
+    position: relative;
+    padding: var(--sec-y) 0;
+  }
+  #shopify-section-{{ section.id }} .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+  #shopify-section-{{ section.id }} .panel-head {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+  #shopify-section-{{ section.id }} .panel-head .kicker {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  #shopify-section-{{ section.id }} .panel-head .d2 {
+    margin-bottom: 12px;
+  }
+  #shopify-section-{{ section.id }} .panel-head .rule {
+    margin: 0 auto;
+    justify-content: center;
+    max-width: 240px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+  #shopify-section-{{ section.id }} .panel-head .rule i {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, rgba(236,230,247,.44), transparent);
+  }
+  #shopify-section-{{ section.id }} .panel-head .rule i:first-child {
+    background: linear-gradient(90deg, transparent, rgba(236,230,247,.44));
+  }
+  #shopify-section-{{ section.id }} .panel-head .rule svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    flex: 0 0 auto;
+  }
+  
+  #shopify-section-{{ section.id }} .shelf {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media(min-width: 860px) {
+    #shopify-section-{{ section.id }} .shelf {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 8,
+      "step": 2,
+      "label": "Product Limit",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
