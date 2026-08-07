@@ -33,43 +33,18 @@
     assign prod_title = product.title
     assign prod_url = product.url
   else
-    assign prod_title = 'Example Product'
+    assign prod_title = 'Purelane Floor Cleaner'
     assign prod_url = '#'
   endif
 -%}
 
-<article class="glass card purelane-card">
-  <a href="{{ prod_url }}" class="card-link" aria-label="{{ prod_title | escape }}">
-    <div class="shot">
-      {%- if badge_label != blank -%}
-        <span class="pill">{{ badge_label | escape }}</span>
-      {%- endif -%}
-      
-      {%- if product != blank and product.featured_image -%}
-        {{ product.featured_image | image_url: width: 600 | image_tag: 
-          loading: loading, 
-          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw', 
-          widths: '300, 400, 600',
-          class: 'pimg-real'
-        }}
+<article class="glass purelane-card" {{ block.shopify_attributes }}>
+  {%- if product != blank -%}
+    <a href="{{ prod_url }}" class="shot">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 768px) 100vw, 33vw' }}
       {%- else -%}
-        <div class="pimg p-kbtl" style="height: 122px; width: 100%;"></div>
-      {%- endif -%}
-    </div>
-    
-    <h4 class="card-title">{{ prod_title | escape }}</h4>
-    
-    <div class="rate">
-      {%- comment -%}Placeholder for rating. You can implement real reviews if you have an app.{%- endcomment -%}
-      <b>★ 4.8</b> &middot; 237 reviews
-    </div>
-    
-    <div class="pr">
-      {%- if product != blank -%}
-        <strong>{{ price | money_without_trailing_zeros }}</strong>
-        {%- if has_discount -%}
-          <s>{{ compare_at | money_without_trailing_zeros }}</s>
-        <div class="pimg p-kbtl" style="width: 100%; height: 100%;"></div>
+        <div class="pimg p-floor" style="width: 100%; height: 100%;"></div>
       {%- endif -%}
     </a>
     
@@ -79,14 +54,14 @@
         <b>★ 4.8</b> &middot; 237 reviews
       </div>
       
-      <h4 class="card-title">{{ product.title | escape }}</h4>
+      <h4 class="card-title">{{ prod_title | escape }}</h4>
       
       <div class="pr">
-        <strong>{{ product.price | money_without_trailing_zeros }}</strong>
-        {%- if product.compare_at_price > product.price -%}
-          <s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+        <strong>{{ price | money_without_trailing_zeros }}</strong>
+        {%- if has_discount -%}
+          <s>{{ compare_at | money_without_trailing_zeros }}</s>
+          <em class="badge">Save {{ discount_amount | money_without_trailing_zeros }}</em>
         {%- endif -%}
-        <em class="badge">Save {{ product.compare_at_price | minus: product.price | money_without_trailing_zeros }}</em>
       </div>
 
       <button type="button" class="btn btn-primary" style="width: 100%;">
@@ -95,16 +70,16 @@
     </div>
   {%- else -%}
     <div class="shot">
-      <div class="pimg p-kbtl" style="width: 100%; height: 100%;"></div>
+      <div class="pimg p-floor" style="width: 100%; height: 100%;"></div>
     </div>
     
     <div class="card-info">
       <div class="rate">
         <b>★ 4.8</b> &middot; 237 reviews
       </div>
-      <h4 class="card-title">Premium Floor Cleaner</h4>
+      <h4 class="card-title">Purelane Floor Cleaner</h4>
       <div class="pr">
-        <strong>₹1,199</strong><s>₹1,499</s>
+        <strong>₹499</strong><s>₹599</s>
       </div>
       <button type="button" class="btn btn-primary" style="width: 100%;">
         Add to cart

@@ -18,15 +18,61 @@
             {%- assign review = block.settings.review_metaobject -%}
             <article class="glass-2 rcard" {{ block.shopify_attributes }}>
               <div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <h5>{{ review.title | default: 'Example review title' | escape }}</h5>
-              <p>{{ review.text | default: 'This is a placeholder review text to show how it will look. Link a real review metaobject in the block settings.' | escape }}</p>
-              <div class="who">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
-                <b>{{ review.author | default: 'Verified Buyer' | escape }}</b>
-                {%- if review.product_tag != blank or request.design_mode -%}
-                  <span>&middot; {{ review.product_tag | default: 'Example product' | escape }}</span>
-                {%- endif -%}
-              </div>
+              
+              {%- if review -%}
+                <h5>{{ review.title | escape }}</h5>
+                <p>{{ review.text | escape }}</p>
+                <div class="who">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                  <b>{{ review.author | escape }}</b>
+                  {%- if review.product_tag != blank -%}
+                    <span>&middot; {{ review.product_tag | escape }}</span>
+                  {%- endif -%}
+                </div>
+              {%- else -%}
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    <h5>Best cleaner I've used</h5>
+                    <p>The multi-surface cleaner easily tackles kitchen grease and leaves no chemical smell behind. Absolutely love the subtle citrus scent.</p>
+                    <div class="who">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      <b>Priya S.</b>
+                      <span>&middot; Multi-Surface</span>
+                    </div>
+                  {%- when 2 -%}
+                    <h5>Safe for my toddler</h5>
+                    <p>Finally a floor cleaner I don't have to worry about when my toddler is crawling around. Cleans beautifully without the harsh toxins.</p>
+                    <div class="who">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      <b>Neha K.</b>
+                      <span>&middot; Floor Cleaner</span>
+                    </div>
+                  {%- when 3 -%}
+                    <h5>Sparkling clean!</h5>
+                    <p>I was skeptical about plant-based cleaners for the bathroom, but this works better than bleach and smells incredible.</p>
+                    <div class="who">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      <b>Aarti M.</b>
+                      <span>&middot; Bathroom Core</span>
+                    </div>
+                  {%- when 4 -%}
+                    <h5>Grease literally melts away</h5>
+                    <p>The kitchen degreaser is magic. Just spray, wipe, and the stove is spotless. I've already bought the refill pack.</p>
+                    <div class="who">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      <b>Rahul V.</b>
+                      <span>&middot; Kitchen Combo</span>
+                    </div>
+                  {%- else -%}
+                    <h5>Highly recommend the bundle</h5>
+                    <p>Buying the Whole Home bundle was the best decision. Every product is fantastic and the microfibre cloths are super high quality.</p>
+                    <div class="who">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      <b>Sneha T.</b>
+                      <span>&middot; Whole Home</span>
+                    </div>
+                {%- endcase -%}
+              {%- endif -%}
             </article>
           {%- endfor -%}
         {%- endfor -%}
