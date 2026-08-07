@@ -72,7 +72,7 @@
           {%- if prod1 and prod1.featured_image -%}
             {{ prod1.featured_image | image_url: height: 800 | image_tag: class: 'hp a d1', loading: 'eager' }}
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'hp a d1 placeholder' }}
+            <div class="pimg p-kbtl hp a d1"></div>
           {%- endif -%}
           <div class="glass-2 ptag">
             <span class="lbl">Single bottle</span>
