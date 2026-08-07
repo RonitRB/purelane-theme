@@ -23,10 +23,10 @@
 
 /* Base modifications not covered by Dawn */
 html { scroll-behavior: smooth; }
-body {
+body, body.gradient {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--ink) !important;
+  color: var(--paper) !important;
   line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
