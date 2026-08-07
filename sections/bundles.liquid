@@ -12,9 +12,9 @@
     <div class="tiers-grid">
       {%- for block in section.blocks -%}
         {%- assign is_highlighted = block.settings.highlight -%}
-        {%- assign card_class = 'glass tier-card rv rv-d' | append: forloop.index -%}
+        {%- assign card_class = 'glass tier' -%}
         {%- if is_highlighted -%}
-          {%- assign card_class = card_class | append: ' highlight' -%}
+          {%- assign card_class = card_class | append: ' best' -%}
         {%- endif -%}
 
         <div class="{{ card_class }}" {{ block.shopify_attributes }}>
@@ -23,9 +23,9 @@
           {%- endif -%}
           
           <div class="tier-head">
-            <h3>{{ block.settings.title | escape }}</h3>
+            <h3 class="d4">{{ block.settings.title | escape }}</h3>
             {%- if block.settings.subtitle != blank -%}
-              <p class="subtitle">{{ block.settings.subtitle | escape }}</p>
+              <p class="body-s">{{ block.settings.subtitle | escape }}</p>
             {%- endif -%}
           </div>
 
@@ -50,17 +50,6 @@
                   {%- endif -%}
                 {%- endfor -%}
               </ul>
-            {%- endif -%}
-            
-            {%- if block.settings.products != blank -%}
-              <div class="includes">
-                <span class="inc-title">Includes:</span>
-                <ul>
-                  {%- for prod in block.settings.products -%}
-                    <li>{{ prod.title | escape }}</li>
-                  {%- endfor -%}
-                </ul>
-              </div>
             {%- endif -%}
           </div>
           
@@ -107,144 +96,91 @@
 
   #shopify-section-{{ section.id }} .tiers-grid {
     display: grid;
-    gap: 20px;
+    gap: 14px;
     grid-template-columns: 1fr;
-    align-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
   }
-  @media(min-width: 860px) {
+  @media(min-width: 760px) {
     #shopify-section-{{ section.id }} .tiers-grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  #shopify-section-{{ section.id }} .tier-card {
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    border-radius: 16px;
-    position: relative;
-    background: linear-gradient(162deg, rgba(236,230,247,.08), rgba(75,58,143,.04));
-    transition: transform .4s var(--ease);
+  #shopify-section-{{ section.id }} .tier {
+    padding: 24px 22px;
+    transition: .4s var(--ease);
   }
-  #shopify-section-{{ section.id }} .tier-card.highlight {
-    background: linear-gradient(162deg, rgba(236,230,247,.14), rgba(75,58,143,.12));
-    border-color: rgba(240,160,60,.3);
-    box-shadow: 0 24px 48px rgba(18,12,34,.3), 0 0 0 1px rgba(240,160,60,.1) inset;
-    padding: 32px 24px;
-    z-index: 2;
-  }
-
   @media(prefers-reduced-motion: no-preference) {
-    #shopify-section-{{ section.id }} .tier-card:hover {
+    #shopify-section-{{ section.id }} .tier:hover {
       transform: translateY(-5px);
     }
   }
+  #shopify-section-{{ section.id }} .tier.best {
+    border-color: rgba(240,160,60,.44);
+    box-shadow: 0 26px 74px rgba(18,12,34,.44), 0 0 0 1px rgba(240,160,60,.2), var(--g-inset);
+  }
 
   #shopify-section-{{ section.id }} .tier-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent);
-    color: #120c22;
-    font-size: 10px;
+    display: inline-block;
+    font-size: 9.5px;
     font-weight: 800;
-    letter-spacing: .1em;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    padding: 4px 12px;
+    padding: 5px 11px;
     border-radius: 999px;
-    white-space: nowrap;
+    margin-bottom: 14px;
+    background: rgba(240,160,60,.18);
+    border: 1px solid rgba(240,160,60,.34);
+    color: var(--accent);
   }
 
-  #shopify-section-{{ section.id }} .tier-head {
-    text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(236,230,247,.1);
-  }
   #shopify-section-{{ section.id }} .tier-head h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 22px;
-    color: var(--surface);
-    margin-bottom: 6px;
+    display: none; /* Reference uses qty for main title? Wait, no. */
   }
-  #shopify-section-{{ section.id }} .tier-head .subtitle {
-    font-size: 13px;
-    color: var(--paper-2);
+  
+  #shopify-section-{{ section.id }} .tier-head {
+    /* Use exact reference typography here */
   }
 
   #shopify-section-{{ section.id }} .tier-price {
-    text-align: center;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 8px;
-  }
-  #shopify-section-{{ section.id }} .tier-price strong {
     font-family: 'Outfit', sans-serif;
-    font-size: 32px;
-    color: var(--surface);
-    line-height: 1;
+    font-weight: 700;
+    font-size: 27px;
+    color: var(--accent);
+    margin: 16px 0 4px;
   }
   #shopify-section-{{ section.id }} .tier-price s {
     font-size: 14px;
     color: var(--paper-3);
+    font-weight: 500;
+    margin-left: 8px;
   }
-
-  #shopify-section-{{ section.id }} .tier-body {
-    flex-grow: 1;
-    margin-bottom: 28px;
+  #shopify-section-{{ section.id }} .tier-price strong {
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
   }
 
   #shopify-section-{{ section.id }} .features {
     list-style: none;
+    margin: 16px 0 20px;
+    display: grid;
+    gap: 8px;
     padding: 0;
-    margin: 0 0 20px 0;
   }
   #shopify-section-{{ section.id }} .features li {
-    font-size: 14px;
-    color: var(--paper-2);
-    margin-bottom: 12px;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.4;
-  }
-  #shopify-section-{{ section.id }} .features li svg {
-    width: 16px;
-    height: 16px;
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  #shopify-section-{{ section.id }} .includes {
-    padding-top: 20px;
-    border-top: 1px solid rgba(236,230,247,.1);
-  }
-  #shopify-section-{{ section.id }} .inc-title {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--paper-3);
-    margin-bottom: 8px;
-  }
-  #shopify-section-{{ section.id }} .includes ul {
-    list-style: disc;
-    padding-left: 18px;
-    margin: 0;
+    gap: 9px;
     font-size: 13px;
     color: var(--paper-2);
   }
-  #shopify-section-{{ section.id }} .includes ul li {
-    margin-bottom: 4px;
+  #shopify-section-{{ section.id }} .features li svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+    flex: 0 0 auto;
+    margin-top: 4px;
   }
-
+  
   #shopify-section-{{ section.id }} .tier-foot .btn {
     width: 100%;
     justify-content: center;
