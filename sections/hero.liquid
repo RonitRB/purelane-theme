@@ -304,7 +304,7 @@
   .purelane-hero .hero-grid {
     max-width: var(--maxw);
     margin: 0 auto;
-    padding: 24px;
+    padding: 24px 5%;
     width: 100%;
     position: relative;
     z-index: 10;
@@ -312,13 +312,14 @@
     flex-direction: column;
     justify-content: flex-end;
     pointer-events: none; /* Let touches pass through where empty */
-    padding-bottom: 48px;
+    padding-bottom: 32px;
   }
   @media(min-width: 900px) {
     .purelane-hero .hero-grid {
       flex-direction: row;
       align-items: flex-end;
       justify-content: space-between;
+      padding: 24px;
       padding-bottom: 64px;
     }
   }
@@ -327,14 +328,19 @@
     position: relative;
     z-index: 10;
     pointer-events: auto;
-    max-width: 600px;
+    width: 100%;
+  }
+  @media(min-width: 900px) {
+    .purelane-hero .hero-copy {
+      max-width: 600px;
+    }
   }
   .purelane-hero h1 {
-    font-size: clamp(48px, 8vw, 100px);
+    font-size: clamp(42px, 11vw, 100px);
     line-height: 1.05;
     letter-spacing: -0.03em;
     font-weight: 300;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     color: var(--surface);
   }
   .purelane-hero .lime { color: var(--accent); font-weight: 400; }
@@ -344,14 +350,32 @@
     color: rgba(255,255,255,0.7);
     max-width: 520px;
     line-height: 1.6;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     font-weight: 400;
   }
   
   .purelane-hero .hero-cta {
     display: flex;
+    flex-direction: column;
     gap: 12px;
     flex-wrap: wrap;
+  }
+  .purelane-hero .hero-cta .btn {
+    width: 100%;
+  }
+  @media(min-width: 900px) {
+    .purelane-hero h1 {
+      margin-bottom: 24px;
+    }
+    .purelane-hero .lede {
+      margin-bottom: 40px;
+    }
+    .purelane-hero .hero-cta {
+      flex-direction: row;
+    }
+    .purelane-hero .hero-cta .btn {
+      width: auto;
+    }
   }
   
   /* DOTS */
@@ -460,9 +484,10 @@
   
   @media(max-width: 900px) {
     .purelane-hero { min-height: 100svh; }
+    .purelane-hero h1 br { display: none; } /* Prevent artificial wrapping on mobile */
     .purelane-hero .hslide { padding-right: 0; justify-content: center; align-items: center; padding-bottom: 20vh; }
     .purelane-hero .hslide.on .hp { transform: scale(1.1); }
-    .purelane-hero .ptag { right: auto; left: 50%; top: 60%; transform: translateX(-50%); }
+    .purelane-hero .ptag { right: auto; left: 50%; top: 58%; transform: translateX(-50%); }
     .purelane-hero .hslide.on .ptag { transform: translateX(-50%) translateY(0); }
   }
 {% endstyle %}

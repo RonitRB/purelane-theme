@@ -236,13 +236,18 @@
   
   #shopify-section-{{ section.id }} .track {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     width: max-content;
-    padding: 0 24px;
+    padding: 0 18px;
+  }
+  #shopify-section-{{ section.id }} .track::after {
+    content: '';
+    flex: 0 0 6px; /* Ensures trailing padding on iOS */
   }
   
   #shopify-section-{{ section.id }} .combo {
-    width: min(85vw, 360px);
+    width: 80vw;
+    max-width: 360px;
     scroll-snap-align: center;
     border-radius: var(--r);
     display: flex;

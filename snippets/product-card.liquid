@@ -190,7 +190,20 @@
     font-style: normal;
   }
   
-  @media(max-width: 768px) {
-    .purelane-card .card-info { padding: 24px 20px; }
+  @media(max-width: 900px) {
+    .purelane-card .card-info { padding: 16px 12px; }
+    .purelane-card .card-title {
+      font-size: 16px;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .purelane-card .pr {
+      margin-bottom: 12px;
+      gap: 4px 8px;
+    }
+    .purelane-card .pr strong { font-size: 16px; }
+    .purelane-card .pr s { font-size: 13px; }
+    .purelane-card .pr .badge { font-size: 10px; padding: 2px 6px; }
+    .purelane-card .rate { font-size: 10px; margin-bottom: 4px; }
   }
 {% endstyle %}
